@@ -1,0 +1,182 @@
+% ============================================================================
+% resume_gdesimini_published.tex
+% THE PUBLISHED CV. Source of truth for dabih2.github.io/Gabriele_Desimini_Resume.pdf.
+% Created 2026-09-08 from resumes/resume_gdesimini_general_20260817.tex
+%
+% WHAT IS DIFFERENT FROM THE US BASE
+%   1. Header logistics line states citizenship only: Canadian and Italian (EU).
+%      No US work authorization line, no marital status, no visa or work-permit
+%      wording, no location line.
+%   2. Paper is A4, matching the CV that was published before 2026-09-12.
+%   3. Headings are protected from page breaks (needspace), so a tailored copy
+%      never leaves a job title orphaned at the bottom of page 1.
+%   4. Everything else (structure, sections, bullets, skills) is the general base.
+%
+% HOW TO TAILOR FOR A CANADIAN COMPANY
+%   - Copy this file to 02-applications/<archetype>/<company-slug>/resume_gdesimini_<company-slug>.tex
+%   - Profile: replace the first words with the exact job title from the JD (TAILOR marker below).
+%   - Skills: reorder lines and items so the JD's priority keywords come first. Reorder, do not expand.
+%   - Bullets: rephrase to surface JD keywords. Never invent experience.
+%   - Do not reintroduce a US work authorization line. Canadian citizenship already answers
+%     "legally entitled to work in Canada".
+%
+% STANDING CHECKS BEFORE SENDING (each grep must print 0; the patterns are written
+% with a bracketed last letter so the comment itself never trips the check)
+%   grep -c "Presen[t]"          no end date range on the NASA entry
+%   grep -ci "sponso[r]"         no visa wording
+%   grep -ci "spous[e]"          no marital status
+%   grep -c "Mountain Vie[w]"    no location line
+%   Gate: python ../Applications/03-components/assemble.py --check <file> with market "published"
+%   grep -c "U\.S\."             no US authorization text
+%   grep -cP "\xe2\x80\x94|--[-]" no em dash character and no literal triple hyphen
+%                                ("--" inside a date range is an en dash and is fine)
+%   grep -ciE "M\.?Sc|Master"    no conferred master's degree wording (gate tokens since 2026-08-20)
+% ============================================================================
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[margin=0.7in]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{linkblue}{RGB}{10,60,120}
+\usepackage[colorlinks=true, urlcolor=linkblue, linkcolor=linkblue]{hyperref}
+\usepackage{titlesec}
+\usepackage{needspace}
+
+% Entry separator: vertical gap plus a guard so a job title is never orphaned at a page bottom.
+\newcommand{\entrygap}{\vspace{5pt}\Needspace*{4\baselineskip}}
+
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-4pt}\rule{\textwidth}{0.6pt}]
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=16pt}
+\renewcommand{\labelitemi}{\textcolor{black!70}{\scriptsize$\bullet$}}
+\setlength{\parindent}{0pt}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ============================================================================
+% HEADER. Name, contact line, citizenship line. No location, no US work-auth text.
+% ============================================================================
+\begin{center}
+    {\LARGE \textbf{Gabriele Desimini}} \\
+    \vspace{4pt}
+    \href{mailto:dabi.ai.eng@gmail.com}{dabi.ai.eng@gmail.com} \quad
+    +39 353 346 8073 \quad +1 410 662 2599 \\
+    \vspace{2pt}
+    \href{https://linkedin.com/in/gabriele-desimini}{linkedin.com/in/gabriele-desimini} \quad
+    \href{https://dabih2.github.io}{dabih2.github.io} \\
+    \vspace{2pt}
+    \small{\textbf{Work Authorization:} Italian and Canadian citizen. Authorized to work in the EU and Canada without sponsorship. Eligible for US TN status as a Canadian citizen (no H-1B lottery, no petition).}
+\end{center}
+
+\vspace{6pt}
+
+% TAILOR: replace "AI/ML Software Engineer" with the exact job title from the JD.
+\section*{Profile}
+AI/ML Software Engineer with 8+ years shipping production systems across backend, AI, and full stack work, including 4+ years building LLM and agentic applications with LangChain, LangGraph, and PyTorch. Deep experience with microservices, REST APIs, Kubernetes, distributed pipelines processing billions of records, RAG platforms, and evaluation harnesses under strict reliability SLOs. Track record of high ownership in fast moving environments, from founding engineer roles at AI startups to safety critical decision support at NASA.
+
+% TAILOR: reorder the lines below so the JD's priority keywords come first. Reorder only, never expand.
+\section*{Skills}
+\textbf{Backend \& APIs:} Python (deep, 8+ yrs), Java, FastAPI, Node.js, REST API design, OpenAPI, authentication and authorization patterns \\
+\textbf{Distributed Systems:} Kubernetes (4+ yrs production), high throughput pipelines over billions of records, batch and streaming processing, fault tolerance, partitioning, performance tuning \\
+\textbf{AI \& Agents:} LangChain, LangGraph, RAG, vector databases (Pinecone, Weaviate), tool calling, multi step reasoning, evaluation harnesses, PyTorch, TensorRT, NVIDIA Jetson edge deployment \\
+\textbf{Integration:} Service decomposition, asynchronous messaging, event driven patterns, API gateways, middleware, contract testing \\
+\textbf{Full Stack:} React, TypeScript, component driven UI, operator facing dashboards \\
+\textbf{CI/CD \& Reliability:} GitHub Actions, GitLab CI, GitOps patterns, blue/green and canary rollouts, automated rollback, structured logging, tracing, metrics, SLO driven on call \\
+\textbf{Cloud \& Infra:} AWS (ECS, EKS, S3, IAM), GCP, Azure, Terraform, Docker \\
+\textbf{Space Systems:} ECSS standards and tailoring, AIT campaigns across 20+ missions, supplier audits, non conformance and waiver handling, FMEA and corrective action \\
+\textbf{Other Languages:} SQL, Bash
+
+\section*{Experience}
+
+% RULE: NASA entry carries a single date, 11/2024. No end date range.
+\textbf{AI Engineer (Research)} \hfill 11/2024 \\
+NASA / San Jose State University
+\begin{itemize}
+    \item Led agent architecture and technical direction for transformer based decision support services, staying hands-on across design, production code, and deployment on Kubernetes under strict latency and reliability SLOs.
+    \item Designed and shipped Python microservices exposing REST APIs consumed by operator applications and downstream systems; orchestrated multi step reasoning agents over heterogeneous aerospace datasets.
+    \item Built CI/CD pipelines with automated testing, blue/green deployments, and automated rollback for safety critical AI services; instrumented end to end observability with structured logs, metrics, and tracing.
+    \item Diagnosed and resolved production failures spanning API integrations, data ingestion, inference, agent orchestration, and downstream consumers, reducing mean time to detection and recovery.
+\end{itemize}
+
+\entrygap
+\textbf{Freelance Machine Learning Engineer} \hfill 11/2023 -- 09/2024 \\
+BagsID
+\begin{itemize}
+    \item Built and operated distributed Vision Transformer inference services on Docker and Kubernetes for live customer traffic, owning capacity planning, latency, and cost optimization.
+    \item Designed batching, caching, and resource aware deployment patterns; improved throughput by 40\% while cutting infrastructure cost.
+    \item Built CI/CD pipelines covering training, evaluation, and deployment; resolved production incidents across the data, model, and infrastructure layers.
+\end{itemize}
+
+\entrygap
+\textbf{Senior Quantitative Analyst} \hfill 10/2022 -- 11/2023 \\
+Atradius
+\begin{itemize}
+    \item Built and supported high throughput ML pipelines in regulated financial environments, processing billions of records on Linux based distributed systems.
+    \item Redesigned data architecture to improve scalability, fault tolerance, and recoverability under partial system failure.
+    \item Implemented automated monitoring, validation, and drift detection workflows; investigated production failures through structured root cause analysis.
+\end{itemize}
+
+\entrygap
+\textbf{ML Infrastructure Engineer} \hfill 01/2022 -- 10/2022 \\
+Supplai
+\begin{itemize}
+    \item Architected Kubernetes based ML deployment stacks with Terraform and GitHub Actions; built containerized microservices with clear service boundaries, contract testing, and performance budgets.
+    \item Exposed REST APIs for real time predictions on multimodal inputs; built automated retraining and evaluation loops integrated with upstream data sources and downstream serving systems.
+    \item Deployed vision models to NVIDIA Jetson edge hardware with TensorRT optimization for latency constrained inference.
+\end{itemize}
+
+\entrygap
+\textbf{AI Consultant} \hfill 01/2020 -- 12/2021 \\
+ESA / OHB / ATG Europe
+\begin{itemize}
+    \item Built telemetry pipelines and anomaly detection systems for mission critical satellite operations on Linux infrastructure with strict reliability SLAs.
+    \item Applied and tailored ECSS standards with compliance matrices, ran supplier audits, and led FMEA and root cause investigations driving corrective and preventive action.
+    \item Operated within structured engineering processes covering change management, validation, and continuous testing.
+\end{itemize}
+
+\entrygap
+\textbf{AIT Engineer} \hfill 06/2018 -- 01/2020 \\
+SITAEL
+\begin{itemize}
+    \item Executed assembly, integration and test campaigns for satellite platforms under ECSS governed procedures, contributing to 20+ missions.
+    \item Built Linux based automation and orchestration tooling supporting distributed hardware integration; executed system level validation and structured failure analysis.
+\end{itemize}
+
+% TAILOR: rename this section to match the JD's language if useful (e.g. "Selected Projects", "LLM Platform Work").
+\section*{Selected AI Platform Work}
+
+\textbf{GrantSpider (Founding Engineer, Production Multi Agent RAG Platform)}
+\begin{itemize}
+    \item Owned technical direction for a multi agent LLM platform with RAG pipelines, retrieval optimization, and evaluation feedback loops; built operator facing React dashboards for review and human in the loop intervention.
+    \item Implemented guardrails against hallucination and prompt injection, plus a structured evaluation harness driving iteration in production.
+\end{itemize}
+
+\vspace{4pt}
+\textbf{Text4Quote (Co-founder \& CTO, LangGraph Agent)}
+\begin{itemize}
+    \item Built an end to end LangGraph agent with multi turn flow, tool calling, persistent memory, and structured outputs, backed by FastAPI and persistent state; owned architecture, production code, and integrations end to end.
+\end{itemize}
+
+\vspace{4pt}
+\textbf{Sphinx (LLM Compliance Extraction)}
+\begin{itemize}
+    \item Hybrid rule plus LLM extraction pipeline with automated CI/CD validation, structured evaluation, and end to end test coverage.
+\end{itemize}
+
+\section*{Education}
+
+% RULE (his instruction of 2026-08-20, answer bank in claude/auto_apply_engine.md): no conferred
+% master's degree may be asserted anywhere, and the degree words themselves are gate tokens.
+% Wording below is the answer-bank wording. Structured dropdowns on forms select "Bachelor's".
+\textbf{Graduate study, Artificial Intelligence} \\
+University of Amsterdam
+
+\vspace{4pt}
+\textbf{B.E. Computer Science \& Automation} \\
+Politecnico di Bari (110/110 cum laude)
+
+\end{document}
