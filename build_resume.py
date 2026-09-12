@@ -22,19 +22,20 @@ import os, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "resume", "resume_gdesimini_published.tex")
+PAGE = os.path.join(HERE, "index.html")  # the site itself is an outbound artefact too
 OUT = os.path.join(HERE, "Gabriele_Desimini_Resume.pdf")
 APPS = os.path.normpath(os.path.join(HERE, os.pardir, "Applications"))
 BUILD = os.path.join(HERE, "resume", "_build")
 
 
-def gate(path):
+def gate(path, market="published"):
     sys.path.insert(0, os.path.join(APPS, "03-components"))
     try:
         import assemble
     except Exception as exc:
         print("GATE UNAVAILABLE: cannot import assemble.py from %s (%s)" % (APPS, exc))
         return ["gate unavailable"]
-    return assemble.check(path, market="published")
+    return assemble.check(path, market=market)
 
 
 def main():
@@ -43,13 +44,28 @@ def main():
     os.makedirs(BUILD, exist_ok=True)
 
     if "--no-gate" not in sys.argv:
-        probs = gate(SRC)
-        if probs:
-            print("GATE FAILED, nothing published:")
-            for p in probs:
-                print("   %s" % p)
+        failed = False
+        # Both the PDF source and index.html are checked. The page carried an
+        # unscoped "No sponsorship needed" chip until 2026-09-12; a gate that only
+        # looks at the PDF would never have seen it.
+        for label, target, mkt in (("resume source", SRC, "published"),
+                                   ("index.html", PAGE, "html")):
+            if not os.path.exists(target):
+                continue
+            found = gate(target, mkt)
+            probs = [x for x in found if not x.startswith("REVIEW ")]
+            review = [x for x in found if x.startswith("REVIEW ")]
+            for x in review:
+                print("gate %s: %s" % (label, x))
+            if probs:
+                failed = True
+                print("GATE FAILED on %s:" % label)
+                for x in probs:
+                    print("   %s" % x)
+        if failed:
+            print("nothing published.")
             sys.exit(1)
-        print("gate: OK")
+        print("gate: OK (resume source and index.html)")
 
     for i in (1, 2):  # twice, so \hfill and page refs settle
         r = subprocess.run(
